@@ -1,8 +1,7 @@
 <?php
-	// include();//try to import a file and warn us on failure
-	// include_once();//try to import a file (if it was not previously imported) and warn us on failure
-	// require();//try to import a file and halt on failure
-	// require_once();//try to import a file (if it was not previously imported) and halt on failure
-	require_once('app/core/init.php');
-
-	new \app\core\App();
+	// include() try to include and warn on failure
+	// include_once() try to include (if not previously included) and warn on failure
+	// require() try to include and halt on failure
+	// require_once() try to include (if not previously included) and halt on failure
+	require("app/core/init.php");
+	new app\core\App();

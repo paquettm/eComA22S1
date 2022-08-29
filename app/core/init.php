@@ -1,2 +1,2 @@
 <?php
-	require_once('app\core\App.php');
+	require("app/core/autoload.php");
