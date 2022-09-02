@@ -11,7 +11,7 @@ class App{
 		//goal: separate the url in parts
 
 		$url = self::parseUrl(); //get the url parsed and returned as an array of URL segment
-
+		
 		//use the first part to determine the controller class to load
 
 		if(isset($url[0])){

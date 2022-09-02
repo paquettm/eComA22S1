@@ -1,14 +1,33 @@
 <?php
 namespace app\controllers;
 
-class Main{
+class Main extends \app\core\Controller{
 	public function index(){
-		echo "Main index";
+		$this->view('Main/index');
 	}
 
 	public function index2(){
-		echo "Main index2";
+		$this->view('Main/index2');
 	}
 
+	public function foods(){
+
+		//process the form data if it is submitted
+		if(isset($_POST['action'])){
+			//create a Food object
+			$newfood = new \app\models\Food();
+			//populate the Food object
+			$newfood->name = $_POST['new_food'];
+			//call insert
+			$newfood->insert();
+		}
+
+		//read the foods.txt file into a variable
+		$food = new \app\models\Food();
+		$foods = $food->getAll();
+		
+		//pass the foods to the view for render and output
+		$this->view('Main/foods', $foods);
+	}
 
 }
