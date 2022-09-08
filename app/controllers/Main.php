@@ -33,4 +33,18 @@ class Main extends \app\core\Controller{
 		$this->view('Main/foods',$foods);
 	}
 
+	//example jquery call to getJSON requires a producer and a consumer
+	//the producer:
+	public function foodsJSON(){
+		//get all the food
+		$food = new \app\models\Food();
+		$foods = $food->getAll();
+
+		//call a view that displays the file contents
+		echo json_encode($foods);
+	}
+	//the consumer:
+	public function foodsDisplay(){
+		$this->view('Main/foodsDisplay');
+	}
 }
