@@ -13,9 +13,9 @@
 
 	foreach ($data as $item) {
 		echo "<tr>
-		<td>$item->id</td>
-		<td>$item->name</td>
-		<td><a href='/Food/delete/$item->id'>delete</a></td>
+		<td type=id>$item->id</td>
+		<td type=name>$item->name</td>
+		<td type=action><a href='/Food/delete/$item->id'>delete</a></td>
 		</tr>";
 	}
 
