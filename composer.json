@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "codeception/module-phpbrowser": "*",
+        "codeception/module-asserts": "*"
+    }
+}

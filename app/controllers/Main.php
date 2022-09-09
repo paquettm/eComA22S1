@@ -30,4 +30,19 @@ class Main extends \app\core\Controller{
 		$this->view('Main/foods', $foods);
 	}
 
+
+	public function foodsJSON(){
+		//service that outputs JSON
+		//read the foods.txt file into a variable
+		$food = new \app\models\Food();
+		$foods = $food->getAll();
+		
+		echo json_encode($foods);
+	}
+
+	public function foodsAJAX(){
+		$this->view('Main/foodsAJAX');
+	}
+
+
 }
