@@ -1,2 +1,2 @@
-# eComA22S2
-eCommerce project A22 section 2
+# eComA22S1
+eCommerce Fall 2022 Section 1 project

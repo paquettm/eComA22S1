@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2022 at 06:51 PM
+-- Generation Time: Sep 16, 2022 at 06:49 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -56,7 +56,8 @@ CREATE TABLE `owner` (
 --
 
 INSERT INTO `owner` (`owner_id`, `first_name`, `last_name`, `contact`) VALUES
-(1, 'John', 'Clayton', 'the jungle');
+(1, 'Mr', 'Green', 'mrgreen@hotmail.com'),
+(2, 'Mister', 'Pink', 'mrpink@hotmail.com');
 
 --
 -- Indexes for dumped tables
@@ -89,7 +90,7 @@ ALTER TABLE `animal`
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

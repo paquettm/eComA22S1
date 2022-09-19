@@ -2,21 +2,20 @@
 namespace app\core;
 
 class Model{
-	protected $_connection;
+	protected static $_connection;
 
 	public function __construct(){
-		//TODO: do better than that
+		$server = 'localhost';//127.0.0.1
+		$dbname = 'vet_clinic';
 		$username = 'root';
 		$password = '';
-		$server = 'localhost'; //or 127.0.0.1
-		$dbname = 'vet_clinic';
 
 		try{
-			//create a new connection to the database
-			$this->_connection = new \PDO("mysql:host=$server;dbname=$dbname",
-				$username, $password);
-			$this->_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+			self::$_connection = new \PDO("mysql:host=$server;dbname=$dbname",
+											$username,$password);
+			self::$_connection->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 		}catch(\Exception $e){
+			echo "Failed connecting to the database";
 			exit(0);
 		}
 	}

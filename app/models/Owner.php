@@ -2,21 +2,48 @@
 namespace app\models;
 
 class Owner extends \app\core\Model{
-	//needs to connect to the DB - through the Model base class
-
 	public function getAll(){
-		//get all records from the owner table
+		//return the collection of all owners
+		//run "SELECT * FROM owner"
 		$SQL = "SELECT * FROM owner";
-		$STMT = $this->_connection->prepare($SQL);
-		$STMT->execute();// pass any data for the query
-		$STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Owner");
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute();//this is where we would pass the data
+		//run some code to return the results
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Owner');
 		return $STMT->fetchAll();
+	}
+
+	public function get($owner_id){
+		$SQL = "SELECT * FROM owner WHERE owner_id=:owner_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['owner_id'=>$owner_id]);
+		//run some code to return the results
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\models\Owner');
+		return $STMT->fetch();
 	}
 
 	public function insert(){
 		$SQL = "INSERT INTO owner(first_name, last_name, contact) VALUES (:first_name, :last_name, :contact)";
-		$STMT = $this->_connection->prepare($SQL);
-		$STMT->execute(['first_name'=>$this->first_name, 'last_name'=>$this->last_name, 'contact'=>$this->contact]);// pass any data for the query
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['first_name'=>$this->first_name,
+						'last_name'=>$this->last_name,
+						'contact'=>$this->contact]);
 	}
 
+	public function update(){
+		$SQL = "UPDATE owner SET first_name=:first_name, last_name=:last_name, contact=:contact WHERE owner_id=:owner_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['first_name'=>$this->first_name,
+						'last_name'=>$this->last_name,
+						'contact'=>$this->contact,
+						'owner_id'=>$this->owner_id]);
+	}
+
+	public function delete(){
+		$SQL = "DELETE FROM owner WHERE owner_id=:owner_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['owner_id'=>$this->owner_id]);
+	}
+
+	
 }

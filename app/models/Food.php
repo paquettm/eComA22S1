@@ -1,26 +1,16 @@
 <?php
 namespace app\models;
 
-class Food{
-	private static $file = 'app/resources/foods.txt';
-	public $name;
+//self:: refers to the class
+//$this-> refers to the object
 
-	public function getAll(){
-		//return all the food records
-		$foods = file(self::$file);
-		$output = [];
-		foreach ($foods as $key => $value) {
-			$newFood = new Food();
-			//kinda like a primary key
-			$newFood->id = $key;
-			$newFood->name = $value;
-			$output[] = $newFood;
-		}
-		return $output;
-	}
+class Food{
+	public $name;
+	public $id;//line number in the file
+	private static $file = 'app/resources/foods.txt';
 
 	public function insert(){
-		//insert a new food record
+		//add the new entry to the end of the file
 		$fh = fopen(self::$file, 'a');
 		flock($fh, LOCK_EX);
 		fwrite($fh, $this->name . "\n");
@@ -28,24 +18,38 @@ class Food{
 		fclose($fh);
 	}
 
-	public function deleteAt($index){
+	public function getAll(){//return all the Food items from the file
 		$foods = file(self::$file);
-		if(!isset($foods[$index])) 
-			return;
-		//delete element $line_num
-		unset($foods[$index]);
-		$foods = array_values($foods);
-		//write everything back
-		$fh = fopen(self::$file, 'w');
-		flock($fh, LOCK_EX);
-		foreach ($foods as $key => $value) {
-			fwrite($fh, $value);
+		$output = [];//or array() to build an empty array
+		$i = 0;
+		foreach ($foods as $food) {
+			$item = new Food();
+			$item->name = $food;
+			$item->id = $i;
+			$output[] = $item;
+			$i++;
 		}
-		flock($fh, LOCK_UN);
+		return $output;
+	}
+
+	public function deleteAt($food_id){
+		$foods = file(self::$file);//read the file
+		if(!isset($foods[$food_id]))
+			return;
+		unset($foods[$food_id]);
+
+		//open the file for writing
+		$fh = fopen(self::$file, 'w');
+		flock($fh,LOCK_EX);
+		foreach ($foods as $food) {
+			fwrite($fh, $food);
+		}
+		flock($fh,LOCK_UN);
 		fclose($fh);
 	}
 
 	public function __toString(){
 		return $this->name;
 	}
+
 }

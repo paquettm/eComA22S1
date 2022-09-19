@@ -1,1 +1,1 @@
-php vendor/bin/codecept %*
+vendor\bin\codecept %*
