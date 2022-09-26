@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2022 at 06:49 PM
+-- Generation Time: Sep 26, 2022 at 05:52 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -34,8 +34,16 @@ CREATE TABLE `animal` (
   `animal_id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `dob` date NOT NULL
+  `dob` date NOT NULL,
+  `profile_pic` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `animal`
+--
+
+INSERT INTO `animal` (`animal_id`, `owner_id`, `name`, `dob`, `profile_pic`) VALUES
+(6, 5, 'Mr Whiskers', '2022-09-12', '6331c9ba3f553.jpg');
 
 -- --------------------------------------------------------
 
@@ -56,8 +64,7 @@ CREATE TABLE `owner` (
 --
 
 INSERT INTO `owner` (`owner_id`, `first_name`, `last_name`, `contact`) VALUES
-(1, 'Mr', 'Green', 'mrgreen@hotmail.com'),
-(2, 'Mister', 'Pink', 'mrpink@hotmail.com');
+(5, 'Mr', 'Brown', '');
 
 --
 -- Indexes for dumped tables
@@ -84,13 +91,13 @@ ALTER TABLE `owner`
 -- AUTO_INCREMENT for table `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

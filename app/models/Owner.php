@@ -39,6 +39,12 @@ class Owner extends \app\core\Model{
 						'owner_id'=>$this->owner_id]);
 	}
 
+	public function deleteAnimals(){
+		$SQL = "DELETE FROM animal WHERE owner_id=:owner_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['owner_id'=>$this->owner_id]);
+	}
+
 	public function delete(){
 		$SQL = "DELETE FROM owner WHERE owner_id=:owner_id";
 		$STMT = self::$_connection->prepare($SQL);

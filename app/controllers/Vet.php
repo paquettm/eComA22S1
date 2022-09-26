@@ -34,6 +34,7 @@ class Vet extends \app\core\Controller{
 	public function delete($owner_id){
 		$owner = new \app\models\Owner();
 		$owner->owner_id = $owner_id;
+		$owner->deleteAnimals();
 		$owner->delete();
 		header('location:/Vet/index');//redirect back to the list
 	}
