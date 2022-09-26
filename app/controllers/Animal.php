@@ -16,7 +16,12 @@ class Animal extends \app\core\Controller{
 	public function details($animal_id){//detailed view for a record
 		$animal = new \app\models\Animal();
 		$animal = $animal->get($animal_id);
-		echo '<img src="images/' . $animal->profile_pic . '">';
+		$owner_id = $animal->owner_id;
+		$owner = new \app\models\Owner();
+		$owner = $owner->get($owner_id);
+		$this->view('Animal/details', ['animal'=>$animal, 'owner'=>$owner]);
+		//this is the corrected example, a / was missing in front
+		//echo '<img src="/images/' . $animal->profile_pic . '">';
 	}
 
 	public function add($owner_id){//add a new record
