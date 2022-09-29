@@ -30,10 +30,11 @@ class Animal extends \app\core\Model{
 	}
 
 	public function update(){
-		$SQL = "UPDATE animal SET name=:name, dob=:dob WHERE animal_id=:animal_id";
+		$SQL = "UPDATE animal SET name=:name, dob=:dob, profile_pic=:profile_pic WHERE animal_id=:animal_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['name'=>$this->name,
 						'dob'=>$this->dob,
+						'profile_pic'=>$this->profile_pic,
 						'animal_id'=>$this->animal_id]);
 	}
 
