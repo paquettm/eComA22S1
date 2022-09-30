@@ -8,6 +8,9 @@ class Controller{
 	}
 
 	public function saveFile($file){
+		if(empty($file['tmp_name']))
+			return false;
+
 		$check = getimagesize($file['tmp_name']);
 		$allowed_types = ['image/jpeg'=>'jpg', 'image/png'=>'png'];
 		if(in_array($check['mime'], array_keys($allowed_types))){

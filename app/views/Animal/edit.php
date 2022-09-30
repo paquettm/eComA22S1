@@ -11,9 +11,10 @@
 	$this->view('Owner/detailsPartial', $data['owner']);
 ?>
 <h1>New Pet Information</h1>
-<form action='' method='post'>
+<form action='' method='post' enctype="multipart/form-data">
 	<label>Name:<input type="text" name="name" value="<?= $data['animal']->name ?>" /></label><br>
 	<label>Date of Birth:<input type="date" name="dob" value="<?= $data['animal']->dob ?>" /></label><br>
+	<label>Profile picture:<input type="file" name="profile_pic" /></label><br>
 	<input type="submit" name="action" value="Modify pet" />
 </form>
 
