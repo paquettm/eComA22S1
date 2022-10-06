@@ -14,9 +14,18 @@
 <form action='' method='post' enctype='multipart/form-data'>
 	<label>Name:<input type="text" name="name" /></label><br>
 	<label>Date of Birth:<input type="date" name="dob" /></label><br>
-	<label>Profile Picture:<input type="file" name="profile_pic" /></label><br>
+	<label>Profile Picture:<input type="file" name="profile_pic" id="profile_pic" /></label><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
 	<input type="submit" name="action" value="Add new pet" />
 </form>
+
+<script>
+	profile_pic.onchange = evt => {
+  const [file] = profile_pic.files
+  if (file) {
+    profile_pic_preview.src = URL.createObjectURL(file)
+  }
+}
+</script>
 
 </body>
 </html>

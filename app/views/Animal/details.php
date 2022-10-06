@@ -27,9 +27,18 @@
 		Picture:
 	</dt>
 	<dd>
-		<img src="/images/<?= $data['animal']->profile_pic ?>" style="max-width:200px;max-height:200px" />
+		<img src="/images/blank.jpg" style="max-width:200px;max-height:200px" id="profile_pic_preview" />
 	</dd>
 </dl>
+
+
+
+<script>
+file = "" + "<?= $data['animal']->profile_pic ?>"
+if (file != "") {
+	document.getElementById("profile_pic_preview").src = "/images/" + file;
+}
+</script>
 
 <a href='/Animal/index/<?= $data['owner']->owner_id ?>'>Back to index</a>
 
