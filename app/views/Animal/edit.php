@@ -6,17 +6,35 @@
 </head>
 
 <body>
-<!-- add the owner details on top here -->
-<?php $this->view('Owner/detailsPartial', $data['owner']); ?>
-
-<form action='' method='post' enctype='multipart/form-data'>
+<h1>Client Information</h1>
+<?php
+	$this->view('Owner/detailsPartial', $data['owner']);
+?>
+<h1>New Pet Information</h1>
+<form action='' method='post' enctype="multipart/form-data">
 	<label>Name:<input type="text" name="name" value="<?= $data['animal']->name ?>" /></label><br>
-	<label>DOB:<input type="date" name="dob" value="<?= $data['animal']->dob ?>" /></label><br>
-	<label>Profile picture:<input type="file" name="profile_pic" /></label><br>
+	<label>Date of Birth:<input type="date" name="dob" value="<?= $data['animal']->dob ?>" /></label><br>
+	<label>Profile picture:<input type="file" name="profile_pic" id="profile_pic" /></label><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
 	<input type="submit" name="action" value="Modify pet" />
 </form>
 
-<a href="/Animal/index/<?= $data['owner']->owner_id ?>">cancel</a>
+<script>
+profile_pic.onchange = evt => {
+  const [file] = profile_pic.files
+  if (file) {
+    profile_pic_preview.src = URL.createObjectURL(file)
+  }
+}
+
+file = "<?= $data['animal']->profile_pic ?>";
+if (file != "") {
+	document.getElementById("profile_pic_preview").src = "/images/" + file;
+}
+
+
+</script>
+
+<a href="/Animal/index/<?= $data['owner']->owner_id ?>">Cancel</a>
 
 </body>
 </html>
