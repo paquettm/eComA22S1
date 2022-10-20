@@ -9,8 +9,8 @@
 <p>This is the index of the Main controller.</p>
 
 <ul>
-<li><a href='/Main/index2'>index 2</a></li>
-<li><a href='/Main/foods'>foods</a></li>
+<li><a href='/Food'>foods example</a></li>
+<li><a href='/Vet/index'>Veterinarian Clinic example</a></li>
 </ul>
 
 

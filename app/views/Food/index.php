@@ -30,8 +30,11 @@
 
 
 <ul>
-<li><a href='/Main/index'>index</a></li>
-<li><a href='/Main/index2'>index2</a></li>
+<li><a href='/Main/index'>back to Index</a></li>
+<li><a href='/Food/display'>foods AJAX(JSON) example</a></li>
+<li><a href='/Vet/index'>Veterinarian Clinic example</a></li>
+</ul>
+
 </ul>
 
 

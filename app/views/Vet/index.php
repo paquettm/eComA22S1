@@ -31,8 +31,7 @@
 </p>
 
 <ul>
-<li><a href='/Main/index'>index</a></li>
-<li><a href='/Main/index2'>index2</a></li>
+<li><a href='/Main/index'>Main index</a></li>
 </ul>
 
 
