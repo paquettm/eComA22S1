@@ -2,6 +2,14 @@
 namespace app\models;
 
 class Owner extends \app\core\Model{
+
+	#[\app\validators\Name]
+	public $first_name;
+	#[\app\validators\Name]
+	public $last_name;
+	#[\app\validators\Email]
+	public $contact;
+
 	public function getAll(){
 		//return the collection of all owners
 		//run "SELECT * FROM owner"
@@ -23,6 +31,7 @@ class Owner extends \app\core\Model{
 	}
 
 	public function insert(){
+		if(!$this->isValid()) return false;
 		$SQL = "INSERT INTO owner(first_name, last_name, contact) VALUES (:first_name, :last_name, :contact)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['first_name'=>$this->first_name,
@@ -31,6 +40,7 @@ class Owner extends \app\core\Model{
 	}
 
 	public function update(){
+		if(!$this->isValid()) return false;
 		$SQL = "UPDATE owner SET first_name=:first_name, last_name=:last_name, contact=:contact WHERE owner_id=:owner_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['first_name'=>$this->first_name,
