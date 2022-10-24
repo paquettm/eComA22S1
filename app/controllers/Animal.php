@@ -38,7 +38,6 @@ class Animal extends \app\core\Controller{
 			//call insert on the object
 			$animal->insert();
 			header('location:/Animal/index/' . $owner_id);
-//			header("location:/Animal/index/$owner_id");*/
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);
