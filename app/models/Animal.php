@@ -29,8 +29,7 @@ class Animal extends \app\core\Model{
 		return $STMT->fetch();
 	}
 
-	public function insert(){
-		if(!$this->isValid())	return false;
+	protected function insert(){
 		$SQL = "INSERT INTO animal(owner_id, name, dob, profile_pic) VALUES (:owner_id, :name, :dob, :profile_pic)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['owner_id'=>$this->owner_id,
@@ -39,8 +38,7 @@ class Animal extends \app\core\Model{
 						'profile_pic'=>$this->profile_pic]);
 	}
 
-	public function update(){
-	if(!$this->isValid())	return false;
+	protected function update(){
 		$SQL = "UPDATE animal SET name=:name, dob=:dob, profile_pic=:profile_pic WHERE animal_id=:animal_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['name'=>$this->name,
