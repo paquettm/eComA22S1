@@ -34,4 +34,10 @@ class Model{
 		}
 		return true;
 	}
+	
+	public function __call($method, $arguments){
+		//called from the object receiving the bad call
+		if($this->isValid())
+			call_user_func_array([$this, $method], $arguments);
+	}
 }
