@@ -30,8 +30,7 @@ class Owner extends \app\core\Model{
 		return $STMT->fetch();
 	}
 
-	public function insert(){
-		if(!$this->isValid()) return false;
+	protected function insert(){
 		$SQL = "INSERT INTO owner(first_name, last_name, contact) VALUES (:first_name, :last_name, :contact)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['first_name'=>$this->first_name,
@@ -39,8 +38,7 @@ class Owner extends \app\core\Model{
 						'contact'=>$this->contact]);
 	}
 
-	public function update(){
-		if(!$this->isValid()) return false;
+	protected function update(){
 		$SQL = "UPDATE owner SET first_name=:first_name, last_name=:last_name, contact=:contact WHERE owner_id=:owner_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['first_name'=>$this->first_name,
