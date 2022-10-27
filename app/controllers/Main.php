@@ -7,6 +7,8 @@ class Main extends \app\core\Controller{
 	}
 
 	
-
+	public function test(){
+		phpinfo();
+	}
 
 }
