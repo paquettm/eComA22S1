@@ -25,7 +25,7 @@ if(isset($_GET['message'])){
 }
 ?>
 
-
+<a href="/User/setup2fa">set up 2-factor authentication</a>
 
 <form action='' method='post'>
 	<label>Old password:<input type="password" name="old_password" /></label><br>

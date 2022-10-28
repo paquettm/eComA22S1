@@ -6,6 +6,10 @@ class Main extends \app\core\Controller{
 		$this->view('Main/index');
 	}
 
+	function test(){
+		phpinfo();
+	}
+
 	public function index2(){
 		$this->view('Main/index2');
 	}

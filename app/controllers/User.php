@@ -11,6 +11,7 @@ class User extends \app\core\Controller{
 				$_SESSION['user_id'] = $user->user_id;
 				$_SESSION['username'] = $user->username;
 				$_SESSION['role'] = $user->role;
+				$_SESSION['secret_key'] = $user->secret_key;
 				header('location:/User/account');
 			}else{
 				header('location:/User/index?error=Wrong username/password combination!');
@@ -77,5 +78,56 @@ class User extends \app\core\Controller{
 		echo "Yay!";
 	}
 
+	public function makeQRCode(){
+		$data = $_GET['data'];
+		\QRcode::png($data);
+	}
+
+	#[\app\filters\Login]
+	public function setup2fa(){
+		if(isset($_POST['action'])){
+			//verification of the code sent by the user
+			$currentCode = $_POST['currentCode'];
+			if(\app\core\TokenAuth6238::verify($_SESSION['secretkey'],$currentCode)){
+				$user = new \app\models\User();
+				$user->user_id = $_SESSION['user_id'];
+				$user->secret_key = $_SESSION['secretkey'];
+				$user->update2fa();
+				header('location:/User/account');
+			}else{
+				header('location:/User/setup2fa?error=Wrong code provided');
+			}
+		}else{
+			$secretkey = \App\core\TokenAuth6238::generateRandomClue();
+			$_SESSION['secretkey'] = $secretkey;
+			$url = \app\core\TokenAuth6238::getLocalCodeUrl(
+				$_SESSION['username'],
+				'Awesome.com',
+				$secretkey,
+				'Awesome App');
+			$this->view('User/twofasetup', $url);
+
+		}
+	}
+
+	function check2fa(){
+		if(!isset($_SESSION['user_id'])){
+			header('location:/User/index');
+			return;
+		}
+		//if the form is sent
+		if(isset($_POST['action'])){
+			$currentCode = $_POST['currentCode'];
+			if(\app\core\TokenAuth6238::verify($_SESSION['secret_key'],$currentCode)){
+				$_SESSION['secret_key']=null;
+				header('location:/User/account');
+			}else{
+				session_destroy();
+				header('location:/User/index');
+			}
+		}else{
+			$this->view('User/check2fa');
+		}
+	}
 
 }
