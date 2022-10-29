@@ -21,11 +21,27 @@ class Animal extends \app\core\Controller{
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
 			$animal->owner_id = $owner_id;
-			$animal->profile_pic = $filename;
 
-			$animal->insert();
+			if($filename){
+				if(isset($_SESSION['profile_pic']))
+					unlink("images/$_SESSION[profile_pic]");
+				//delete the old picture and then change the picture
+				$_SESSION['profile_pic'] = $filename;
+			}
+			if(isset($_SESSION['profile_pic']))
+				$animal->profile_pic = $_SESSION['profile_pic'];
 
-			header('location:/Animal/index/' . $owner_id);
+			$results = $animal->insert();
+
+			if($results->isValid){
+				unset($_SESSION['profile_pic']);
+				header('location:/Animal/index/' . $owner_id);
+			}
+			else{
+				$owner = new \app\models\Owner();
+				$owner = $owner->get($owner_id);
+				$this->view('Animal/add',['owner'=>$owner,'input'=>$animal,'error'=>$results]);
+			}
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);

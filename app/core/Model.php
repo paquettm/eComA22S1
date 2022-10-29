@@ -20,7 +20,8 @@ class Model{
 		}
 	}
 
-		function isValid(){//aplication of all validators on the object properties
+	function isValid(){//aplication of all validators on the object properties
+		$results = new ValidationResultSet();
 		$reflection = new \ReflectionObject($this);
 		//find the properties
 		$classProperties = $reflection->getProperties();
@@ -28,16 +29,17 @@ class Model{
 			$propertyAttributes = $property->getAttributes();
 			foreach ($propertyAttributes as $attribute) {
 				$test = $attribute->newInstance();
-				if(!$test->isValidData($property->getValue($this)))
-					return false;
+				$results->add($test->isValidData($property->getValue($this)), $property->name);
 			}
 		}
-		return true;
+		return $results;
 	}
 	
 	public function __call($method, $arguments){
 		//called from the object receiving the bad call
-		if($this->isValid())
+		$resultSet = $this->isValid();
+		if($resultSet->isValid)
 			call_user_func_array([$this, $method], $arguments);
+		return $resultSet;
 	}
 }

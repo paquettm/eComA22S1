@@ -1,6 +1,7 @@
 <?php
 namespace app\core;
+use \app\core\ValidationResult;
 
-abstract class Validator{
-	abstract public function isValidData($data);
+interface Validator{
+	public function isValidData($data): ValidationResult;
 }
