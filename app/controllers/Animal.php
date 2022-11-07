@@ -32,6 +32,7 @@ class Animal extends \app\core\Controller{
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
 			$animal->owner_id = $owner_id;//FK from the parameters
+			$animal->country_id = $_POST['country_id'];//FK from the parameters
 			//TODO:
 			$filename = $this->saveFile($_FILES['profile_pic']);
 			$animal->profile_pic = $filename;
@@ -41,7 +42,10 @@ class Animal extends \app\core\Controller{
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);
-			$this->view('Animal/add',['owner'=>$owner]);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+
+			$this->view('Animal/add',['owner'=>$owner,'countries'=>$countries]);
 		}
 	}
 
@@ -68,13 +72,16 @@ class Animal extends \app\core\Controller{
 			}
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
+			$animal->country_id = $_POST['country_id'];
 			$animal->update();
 			//redirect
 			header('location:/Animal/index/' . $owner_id);
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);
-			$this->view('Animal/edit',['owner'=>$owner,'animal'=>$animal]);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+			$this->view('Animal/edit',['owner'=>$owner,'animal'=>$animal,'countries'=>$countries]);
 		}
 	}
 
