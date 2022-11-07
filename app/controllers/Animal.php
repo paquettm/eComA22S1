@@ -22,6 +22,7 @@ class Animal extends \app\core\Controller{
 			$animal->dob = $_POST['dob'];
 			$animal->owner_id = $owner_id;
 			$animal->profile_pic = $filename;
+			$animal->country_id = $_POST['country_id'];
 
 			$animal->insert();
 
@@ -29,7 +30,10 @@ class Animal extends \app\core\Controller{
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);
-			$this->view('Animal/add',['owner'=>$owner]);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+
+			$this->view('Animal/add',['owner'=>$owner,'countries'=>$countries]);
 		}
 	}
 
@@ -43,12 +47,12 @@ class Animal extends \app\core\Controller{
 			$filename = $this->saveFile($_FILES['profile_pic']);
 
 			if($filename){
-				//delete the old picture and then change the picture
 				unlink("images/$animal->profile_pic");
 				$animal->profile_pic = $filename;
 			}
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
+			$animal->country_id = $_POST['country_id'];
 
 			$animal->update();
 
@@ -56,7 +60,9 @@ class Animal extends \app\core\Controller{
 		}else{
 			$owner = new \app\models\Owner();
 			$owner = $owner->get($owner_id);
-			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal]);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal,'countries'=>$countries]);
 		}
 	}
 
