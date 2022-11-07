@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 05:07 PM
+-- Generation Time: Nov 07, 2022 at 06:03 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -52,7 +52,7 @@ CREATE TABLE `country` (
   `name` varchar(80) NOT NULL,
   `nicename` varchar(80) NOT NULL,
   `iso3` char(3) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `country`
@@ -351,7 +351,8 @@ INSERT INTO `user` (`user_id`, `username`, `password_hash`, `role`) VALUES
 --
 ALTER TABLE `animal`
   ADD PRIMARY KEY (`animal_id`),
-  ADD KEY `animal_to_owner` (`owner_id`);
+  ADD KEY `animal_to_owner` (`owner_id`),
+  ADD KEY `animal_to_country_of_origin` (`country_id`);
 
 --
 -- Indexes for table `country`
@@ -408,6 +409,7 @@ ALTER TABLE `user`
 -- Constraints for table `animal`
 --
 ALTER TABLE `animal`
+  ADD CONSTRAINT `animal_to_country_of_origin` FOREIGN KEY (`country_id`) REFERENCES `country` (`country_id`),
   ADD CONSTRAINT `animal_to_owner` FOREIGN KEY (`owner_id`) REFERENCES `owner` (`owner_id`);
 COMMIT;
 
