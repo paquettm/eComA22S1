@@ -19,6 +19,15 @@ $this->view('shared/header', 'Edit pet');
 		<label class="input-group-text">Profile picture:</label>
 		<input type="file" name="profile_pic" id="profile_pic" class='form-control'/><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" />
 	</div>
+		<select name="country_id">
+<?php
+	foreach ($data['countries'] as $country) {
+		echo "<option value='$country->country_id'" . ($data['animal']->country_id == $country->country_id?" selected":"") . ">$country->nicename</option>";
+	}
+?>
+		</select>
+	</label><br>
+	<label>Profile picture:<input type="file" name="profile_pic" id="profile_pic" /></label><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
 	<input type="submit" name="action" value="Modify pet" />
 </form>
 

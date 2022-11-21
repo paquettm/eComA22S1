@@ -13,6 +13,8 @@ $this->view('shared/header', 'User account');
 </div>
 <?php	}
 ?>
+<a href="/User/setup2fa">Set up 2-factor authentication</a>
+
 
 <h1>Modify your password</h1>
 <form action='' method='post'>

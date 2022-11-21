@@ -23,6 +23,8 @@ class Animal extends \app\core\Controller{
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
 			$animal->owner_id = $owner_id;
+			$animal->profile_pic = $filename;
+			$animal->country_id = $_POST['country_id'];
 
 			if($filename){
 				if(isset($_SESSION['profile_pic']))
@@ -40,7 +42,12 @@ class Animal extends \app\core\Controller{
 				$this->view('Animal/add',$owner);
 			}
 		}else{
-			$this->view('Animal/add',$owner);
+			$owner = new \app\models\Owner();
+			$owner = $owner->get($owner_id);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+
+			$this->view('Animal/add',['owner'=>$owner,'countries'=>$countries]);
 		}
 	}
 
@@ -68,6 +75,7 @@ class Animal extends \app\core\Controller{
 			}
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
+			$animal->country_id = $_POST['country_id'];
 
 			//if the update operation is valid
 			if($animal->update()->isValid()){
@@ -80,8 +88,11 @@ class Animal extends \app\core\Controller{
 				$this->view('Animal/edit',['owner'=>$owner]);
 			}
 		}else{
-			\app\core\Model::$input = $animal;
-			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal]);
+			$owner = new \app\models\Owner();
+			$owner = $owner->get($owner_id);
+			$country = new \app\models\Country();
+			$countries= $country->getAll();
+			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal,'countries'=>$countries]);
 		}
 	}
 

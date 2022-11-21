@@ -8,6 +8,9 @@ class Login extends \app\core\AccessFilter{
 		if(!isset($_SESSION['user_id'])){
 			header('location:/User/index?error=You must log in to use these features!');
 			return true;
+		}elseif ($_SESSION['secret_key']!=null) {
+			header('location:/User/check2fa');
+			return true;
 		}
 		return false;
 	}
