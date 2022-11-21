@@ -10,6 +10,6 @@ class AnimalBirthDate implements \app\core\Validator{
 		$diff = date_diff($now, $then);
 		$test = $diff->y < 500;
 		$message = ($test?'':'Animals older than 500 years may not be recorded.');
-		return new ValidationResult($test,$message);
+		return new ValidationResult($test,$message,$data);
 	}
 }

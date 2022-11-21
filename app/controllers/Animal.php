@@ -13,6 +13,8 @@ class Animal extends \app\core\Controller{
 	}
 
 	public function add($owner_id){
+		$owner = new \app\models\Owner();
+		$owner = $owner->get($owner_id);
 		if(isset($_POST['action'])){
 			$animal = new \app\models\Animal();
 
@@ -31,21 +33,14 @@ class Animal extends \app\core\Controller{
 			if(isset($_SESSION['profile_pic']))
 				$animal->profile_pic = $_SESSION['profile_pic'];
 
-			$results = $animal->insert();
-
-			if($results->isValid){
+			if($animal->insert()->isValid()){
 				unset($_SESSION['profile_pic']);
 				header('location:/Animal/index/' . $owner_id);
-			}
-			else{
-				$owner = new \app\models\Owner();
-				$owner = $owner->get($owner_id);
-				$this->view('Animal/add',['owner'=>$owner,'input'=>$animal,'error'=>$results]);
+			}else{
+				$this->view('Animal/add',$owner);
 			}
 		}else{
-			$owner = new \app\models\Owner();
-			$owner = $owner->get($owner_id);
-			$this->view('Animal/add',['owner'=>$owner]);
+			$this->view('Animal/add',$owner);
 		}
 	}
 
@@ -53,25 +48,39 @@ class Animal extends \app\core\Controller{
 		$animal = new \app\models\Animal();
 		$animal = $animal->get($animal_id);
 		$owner_id = $animal->owner_id;
-
+		$owner = new \app\models\Owner();
+		$owner = $owner->get($owner_id);
 		if(isset($_POST['action'])){
 
 			$filename = $this->saveFile($_FILES['profile_pic']);
 
 			if($filename){
-				//delete the old picture and then change the picture
-				unlink("images/$animal->profile_pic");
+				//delete the old picture ONLY IF VALID
+				//unlink for recorded filename moved after update
+				if(isset($_SESSION['filename']))//changing
+					unlink("images/$_SESSION[filename]");
+				$_SESSION['filename'] = $filename;
+
+				$_SESSION['oldFile'] = $animal->profile_pic;
 				$animal->profile_pic = $filename;
+			}elseif(isset($_SESSION['filename'])){
+				$animal->profile_pic = $_SESSION['filename'];
 			}
 			$animal->name = $_POST['name'];
 			$animal->dob = $_POST['dob'];
 
-			$animal->update();
-
-			header('location:/Animal/index/' . $owner_id);
+			//if the update operation is valid
+			if($animal->update()->isValid()){
+				if(isset($_SESSION['oldFile']))
+					unlink("images/$_SESSION[oldFile]");
+				unset($_SESSION['oldFile']);
+				unset($_SESSION['filename']);
+				header('location:/Animal/index/' . $owner_id);
+			}else{
+				$this->view('Animal/edit',['owner'=>$owner]);
+			}
 		}else{
-			$owner = new \app\models\Owner();
-			$owner = $owner->get($owner_id);
+			\app\core\Model::$input = $animal;
 			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal]);
 		}
 	}

@@ -23,9 +23,13 @@ class Vet extends \app\core\Controller{
 			$newOwner->last_name = $_POST['last_name'];
 			$newOwner->contact = $_POST['contact'];
 			//call insert on the new owner object
-			$newOwner->insert();
-			//redirect back to the list (index)
-			header('location:/Vet/index');
+			if($newOwner->insert()->isValid()){
+				//redirect back to the list (index)
+				header('location:/Vet/index');
+			}else{
+				\app\core\Model::$input = $newOwner;
+				$this->view('Vet/addOwner');
+			}
 		}
 		else
 			$this->view('Vet/addOwner');
@@ -47,11 +51,15 @@ class Vet extends \app\core\Controller{
 			$owner->last_name = $_POST['last_name'];
 			$owner->contact = $_POST['contact'];
 
-			$owner->update();
-
-			header('location:/Vet/index');
+			if($owner->update()->isValid()){
+				header('location:/Vet/index');
+			}else{
+				\app\core\Model::$input = $owner;
+				$this->view('Vet/editOwner');
+			}
 		}else{
-			$this->view('Vet/editOwner', $owner);
+			\app\core\Model::$input = $owner;
+			$this->view('Vet/editOwner');
 		}
 	}
 
@@ -60,5 +68,4 @@ class Vet extends \app\core\Controller{
 		$owner = $owner->get($owner_id);
 		$this->view('/Vet/ownerDetails',$owner);
 	}
-
 }

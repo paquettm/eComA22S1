@@ -25,7 +25,6 @@ class User extends \app\core\Controller{
 		}
 	}
 
-	//GOAL #[Attribute] to provide authentication service
 	#[\app\filters\Login]
 	public function account(){
 		if(isset($_POST['action'])){
@@ -34,20 +33,17 @@ class User extends \app\core\Controller{
 			$user = $user->get($_SESSION['username']);
 			if(password_verify($_POST['old_password'],$user->password_hash)){
 				//old password matches
-				if($_POST['password'] == $_POST['password_confirm']){
-					//good!
-					$user->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-					$user->updatePassword();
+				$user->password = [$_POST['password'], $_POST['password_confirm']];
+				if($user->updatePassword()->isValid()){
 					header('location:/User/account?message=Password modified.');
-
 				}else{
-					header('location:/User/account?error=New passwords don\'t match. Password unchanged.');	
+					unset($user->password);
+					\app\core\Model::$input = $user;
+					$this->view('User/account');
 				}
 			}else{
 				header('location:/User/account?error=Wrong password provided. Password unchanged.');
 			}
-
-
 		}else
 			$this->view('User/account');
 	}
@@ -62,24 +58,18 @@ class User extends \app\core\Controller{
 		//when we submit the form
 		if(isset($_POST['action'])){
 			//verify that the password and password_confirmation match
-			if($_POST['password'] == $_POST['password_confirmation']){
-				//TODO: validation later
-				//proceed with attempting registration
+			//proceed with attempting registration
+			$user = new \app\models\User();
+			$user->username = $_POST['username'];
+			$user->password = [$_POST['password'], $_POST['password_confirmation']];
 
-				$user = new \app\models\User();//TODO
-
-				if($user->get($_POST['username'])){
-					//redirect with an error message
-					header('location:/User/register?error=The username "'.$_POST['username'].'" already exists. Choose another.');
-				}else{
-					$user->username = $_POST['username'];
-					$user->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-					$user->insert();//maybe this is where we will have some error checking
-
-					header('location:/User/index');
-				}
+			if($user->insert()->isValid()){
+				header('location:/User/index');
+				return;
 			}
+			unset($user->password);
+			\app\core\Model::$input = $user;
+			$this->view('User/register');
 		}else{
 			//show the registration form
 			$this->view('User/register');

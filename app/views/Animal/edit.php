@@ -1,20 +1,24 @@
-<html>
-<head>
-	<title>Edit an animal</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-</head>
-
-<body>
+<?php
+$this->view('shared/header', 'Edit pet');
+?>
 <h1>Client Information</h1>
 <?php
 	$this->view('Owner/detailsPartial', $data['owner']);
 ?>
 <h1>New Pet Information</h1>
-<form action='' method='post' enctype="multipart/form-data">
-	<label>Name:<input type="text" name="name" value="<?= $data['animal']->name ?>" /></label><br>
-	<label>Date of Birth:<input type="date" name="dob" value="<?= $data['animal']->dob ?>" /></label><br>
-	<label>Profile picture:<input type="file" name="profile_pic" id="profile_pic" /></label><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
+<form id='form' action='' method='post' enctype="multipart/form-data">
+	<div class="input-group has-validation">
+		<label class="input-group-text">Name:</label>
+		<input type="text" name="name" class='form-control'/>
+	</div>
+	<div class="input-group has-validation">
+		<label class="input-group-text">Date of Birth:</label>
+		<input type="date" name="dob" class='form-control'/>
+	</div>
+	<div class="input-group has-validation">
+		<label class="input-group-text">Profile picture:</label>
+		<input type="file" name="profile_pic" id="profile_pic" class='form-control'/><img id='profile_pic_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" />
+	</div>
 	<input type="submit" name="action" value="Modify pet" />
 </form>
 
@@ -26,15 +30,15 @@ profile_pic.onchange = evt => {
   }
 }
 
-file = "<?= $data['animal']->profile_pic ?>";
+file = "<?= \app\core\Model::$input->profile_pic ?>";
 if (file != "") {
 	document.getElementById("profile_pic_preview").src = "/images/" + file;
 }
-
-
 </script>
+<?php $this->doFeedback('#form'); ?>
 
 <a href="/Animal/index/<?= $data['owner']->owner_id ?>">Cancel</a>
 
-</body>
-</html>
+<?php
+$this->view('shared/footer');
+?>

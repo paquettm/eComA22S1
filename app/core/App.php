@@ -5,6 +5,19 @@ class App{
 	private $controller = 'Main';
 	private $method = 'index';
 
+	//filter and package the request
+	public function getRequest(){
+		$request = ['get'=>[], 'post'=>[]];
+		foreach($_GET as $key=>$value){
+			$request['get'][$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+		}
+		$post = [];
+		foreach ($_POST as $key => $value) {
+			$request['post'][$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+		}
+		return $request;
+	}
+
 	public function __construct(){
 		//echo $_GET['url'];
 		//TODO: replace this echo with the routing algorithm

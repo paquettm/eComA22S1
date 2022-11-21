@@ -1,17 +1,9 @@
-<html>
-<head>
-	<title>Add an animal</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-<script type="text/javascript" src='https://code.jquery.com/jquery-3.6.1.min.js'></script>
-</head>
-
-<body>
+<?php
+$this->view('shared/header', 'Add new pet');
+?>
 <h1>Client Information</h1>
 <?php
-	$this->view('Owner/detailsPartial', $data['owner']);
-	$input = isset($data['input'])?$data['input']:[];
-	$error = isset($data['error'])?$data['error']->getSet():[];
+	$this->view('Owner/detailsPartial', $data);
 ?>
 <h1>New Pet Information</h1>
 <form id='form' action='' method='post' enctype='multipart/form-data'>
@@ -37,15 +29,9 @@
   }
 }
 </script>
-<script><?php
-foreach ($error as $key => $value) { ?>
-	$('#form input[name=<?=$key?>]').addClass('<?=($value->isValid?'is-valid':'is-invalid')?>');
-	$('#form input[name=<?=$key?>]').parent().append("<div class='invalid-feedback'><?=$value->errorMessage?></div>");	
-<?php } 
-foreach ($input as $key => $value) { ?>
-	try{$('#form input[name=<?=$key?>]').val('<?=$input->$key?>');}catch(err){}
-<?php } ?>
-</script>
+<?php $this->doFeedback('#form'); ?>
 
-</body>
-</html>
+<a href="/Animal/index/<?= $data->owner_id ?>">Cancel</a>
+<?php
+$this->view('shared/footer');
+?>
