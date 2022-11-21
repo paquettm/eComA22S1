@@ -42,4 +42,9 @@ class Food extends \app\core\Controller{
 	public function display(){
 		$this->view('Food/display');
 	}
+=======
+		header('location:/Main/foods');
+	}
+
+>>>>>>> bb75fd58676df6ed82e0d2978003d2f0893b8a65
 }

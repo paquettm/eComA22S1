@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 class Animal extends \app\core\Controller{
+<<<<<<< HEAD
 	
 	//list the animals owned by a specific owner
 	public function index($owner_id){

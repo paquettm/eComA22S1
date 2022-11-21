@@ -1,6 +1,7 @@
 <?php
 namespace app\validators;
 use \app\core\ValidationResult;
+
 #[\Attribute]
 class Name implements \app\core\Validator{
 	public function isValidData($data) : ValidationResult{
