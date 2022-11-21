@@ -6,6 +6,7 @@
 	<input type="submit" name="action" value="Save changes" />
 </form>
 <?php $this->doFeedback(''); ?>
+<a href='/Vet'>Cancel</a>
 <?php
 $this->view('shared/footer');
 ?>

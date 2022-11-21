@@ -9,6 +9,7 @@ class Animal extends \app\core\Model{
 	public $name;
 	#[\app\validators\NonEmpty]
 	#[\app\validators\AnimalBirthDate]
+	#[\app\validators\NoFuture]
 	public $dob;
 
 	public function getAll($owner_id){

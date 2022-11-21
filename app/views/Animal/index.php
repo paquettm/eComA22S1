@@ -28,11 +28,6 @@ $this->view('shared/header', 'Client Animals');
 
 <a href='/Vet/index'>Back to the client list</a>
 
-
-<ul>
-<li><a href='/Main/index'>index</a></li>
-<li><a href='/Main/index2'>index2</a></li>
-</ul>
 <?php
 $this->view('shared/footer');
 ?>

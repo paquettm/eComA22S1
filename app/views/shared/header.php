@@ -7,3 +7,4 @@
 	<script type="text/javascript" src='/js/feedback.js'></script>
 </head>
 <body>
+	<div class='container'>

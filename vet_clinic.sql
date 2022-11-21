@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 06:03 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Nov 21, 2022 at 09:26 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,6 +38,14 @@ CREATE TABLE `animal` (
   `country_id` int(11) DEFAULT NULL,
   `profile_pic` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `animal`
+--
+
+INSERT INTO `animal` (`animal_id`, `owner_id`, `name`, `dob`, `country_id`, `profile_pic`) VALUES
+(11, 5, 'Cutiepie', '2022-01-01', 8, '637bda81dc4d2.jpg'),
+(14, 6, 'Cheetah', '2019-12-31', 6, '637bded3de4c0.jpg');
 
 -- --------------------------------------------------------
 
@@ -318,7 +326,8 @@ CREATE TABLE `owner` (
 --
 
 INSERT INTO `owner` (`owner_id`, `first_name`, `last_name`, `contact`) VALUES
-(5, 'Mr', 'Brown', '');
+(5, 'Mr', 'Green', 'Mister.green@email.com'),
+(6, 'Mister', 'Clayton', 'd@email.com');
 
 -- --------------------------------------------------------
 
@@ -381,7 +390,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `animal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `country`
@@ -393,7 +402,7 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`

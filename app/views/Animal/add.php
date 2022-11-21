@@ -3,7 +3,7 @@ $this->view('shared/header', 'Add new pet');
 ?>
 <h1>Client Information</h1>
 <?php
-	$this->view('Owner/detailsPartial', $data);
+	$this->view('Owner/detailsPartial', $data['owner']);
 ?>
 <h1>New Pet Information</h1>
 <form id='form' action='' method='post' enctype='multipart/form-data'>
@@ -11,8 +11,19 @@ $this->view('shared/header', 'Add new pet');
 		<label class="input-group-text" >Name:</label>
 		<input type="text" name="name" class='form-control' />
 	</div>
-	<div class="input-group has-validation"><label class="input-group-text">Date of Birth:</label>
+	<div class="input-group has-validation">
+		<label class="input-group-text">Date of Birth:</label>
 		<input type="date" name="dob" class='form-control' />
+	</div>
+	<div class="input-group has-validation">
+		<label class="input-group-text">Country of origin:</label>
+		<select class='form-control' name="country_id">
+<?php
+	foreach ($data['countries'] as $country) {
+		echo "<option value='$country->country_id'>$country->nicename</option>";
+	}
+?>
+		</select>
 	</div>
 	<div class="input-group has-validation">
 		<label class="input-group-text">Profile Picture:</label>
@@ -31,7 +42,7 @@ $this->view('shared/header', 'Add new pet');
 </script>
 <?php $this->doFeedback('#form'); ?>
 
-<a href="/Animal/index/<?= $data->owner_id ?>">Cancel</a>
+<a href="/Animal/index/<?= $data['owner']->owner_id ?>">Cancel</a>
 <?php
 $this->view('shared/footer');
 ?>

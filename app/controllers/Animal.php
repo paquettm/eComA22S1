@@ -15,6 +15,9 @@ class Animal extends \app\core\Controller{
 	public function add($owner_id){
 		$owner = new \app\models\Owner();
 		$owner = $owner->get($owner_id);
+		$country = new \app\models\Country();
+		$countries= $country->getAll();		
+
 		if(isset($_POST['action'])){
 			$animal = new \app\models\Animal();
 
@@ -39,14 +42,9 @@ class Animal extends \app\core\Controller{
 				unset($_SESSION['profile_pic']);
 				header('location:/Animal/index/' . $owner_id);
 			}else{
-				$this->view('Animal/add',$owner);
+				$this->view('Animal/add',['owner'=>$owner,'countries'=>$countries]);
 			}
 		}else{
-			$owner = new \app\models\Owner();
-			$owner = $owner->get($owner_id);
-			$country = new \app\models\Country();
-			$countries= $country->getAll();
-
 			$this->view('Animal/add',['owner'=>$owner,'countries'=>$countries]);
 		}
 	}
@@ -54,6 +52,7 @@ class Animal extends \app\core\Controller{
 	public function edit($animal_id){
 		$animal = new \app\models\Animal();
 		$animal = $animal->get($animal_id);
+		\app\core\Model::$input = $animal;
 		$owner_id = $animal->owner_id;
 		$owner = new \app\models\Owner();
 		$owner = $owner->get($owner_id);
@@ -92,6 +91,7 @@ class Animal extends \app\core\Controller{
 			$owner = $owner->get($owner_id);
 			$country = new \app\models\Country();
 			$countries= $country->getAll();
+
 			$this->view('Animal/edit',['owner'=>$owner, 'animal'=>$animal,'countries'=>$countries]);
 		}
 	}
