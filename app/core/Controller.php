@@ -63,8 +63,8 @@ class Controller{
 		return $form;
 
 	}
-=======
-	public function saveFile($file){
+
+/*	public function saveFile($file){
 		if(empty($file['tmp_name']))
 			return false;
 
@@ -78,6 +78,5 @@ class Controller{
 		}else
 			return '';
 	}
-
->>>>>>> bb75fd58676df6ed82e0d2978003d2f0893b8a65
+*/
 }
